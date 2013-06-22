@@ -1,5 +1,5 @@
-#ifndef TIME_HPP
-#define TIME_HPP
+#ifndef BENCHMARK_HPP
+#define BENCHMARK_HPP
 
 #include <chrono>
 #include <functional>
@@ -21,4 +21,4 @@ namespace util {
 
 } /* namespace util */
 
-#endif /* end of include guard: TIME_HPP */
+#endif /* end of include guard: BENCHMARK_HPP */
