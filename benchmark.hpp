@@ -11,9 +11,9 @@ namespace util {
     benchmark(std::function< auto()->Ret > f, size_t iterations = 100) {
         
         auto start = std::chrono::steady_clock::now();
-        for (auto i = iterations; i > 0; i--) {
+        while ( iterations --> 0 )
             f();
-        }
+
         auto stop  = std::chrono::steady_clock::now();
         
         return (stop - start);
