@@ -14,29 +14,43 @@
 #include "time.hpp"
 
 void foo_function() {
-    std::chrono::milliseconds dura( 1000 );
+    std::chrono::milliseconds dura( 500 );
     std::this_thread::sleep_for( dura );
 }
 
-void bar_function(int i) {
-    i = 3;
+int bar_function(int i = 0) {
     std::chrono::milliseconds dura( 1000 );
     std::this_thread::sleep_for( dura );
-    // return i;
+    return i;
 }
 
 int main() {
 
-    auto time_elapsed = util::time_this(foo_function);
-    auto time_elapsed2 = util::time_this<std::micro>(foo_function);
-    std::function<decltype(bar_function)> x = std::bind(bar_function, 31337);
-    // auto time_elapsed3 = util::time_this3<std::micro, decltype(x)>(x);
-    // auto time_elapsed3 = util::time_this3<std::micro, decltype(x), 5>(x);
+    auto time_elapsed0 = util::time_this(foo_function);
+    auto time_elapsed1 = util::time_this(std::function<void()>(foo_function));
+    auto time_elapsed2 = util::time_this<>(std::function<void()>(foo_function));
+    auto time_elapsed3 = util::time_this<std::micro>(std::function<void()>(foo_function));
+    auto time_elapsed4 = util::time_this<std::milli, void>(foo_function);
+    auto time_elapsed5 = util::time_this<std::micro, int>(std::bind(bar_function, 31337));
+    auto time_elapsed6 = util::time_this<std::nano, void>([]{ std::cout << "Hello World!" << std::endl;});
+    auto time_elapsed7 = util::time_this<std::nano, void>([](){ std::cout << "Hello World!" << std::endl;});
+    auto time_elapsed8 = util::time_this<std::nano, void>([] () -> void { std::cout << "Hello World!" << std::endl;});
+    auto time_elapsed9 = util::time_this<std::nano, int>([]() -> int{ return bar_function(42); } );
+    auto time_elapsed10 = util::time_this(std::function<int()>(std::bind(bar_function, 31337)));
     
-    std::cout << "Time elapsed: " <<  std::chrono::duration_cast<std::chrono::seconds>(time_elapsed).count() << " seconds" << std::endl;
-    std::cout << "Time elapsed: " <<  time_elapsed.count() << " milli-seconds" << std::endl;
-    std::cout << "Time elapsed: " <<  time_elapsed2.count() << " micro-seconds" << std::endl;
-    // std::cout << "Time elapsed: " <<  time_elapsed3.count() << " micro-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  std::chrono::duration_cast<std::chrono::seconds>(time_elapsed0).count() << " seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed0.count() << " milli-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed1.count() << " milli-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed2.count() << " milli-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed3.count() << " milli-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed4.count() << " micro-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed5.count() << " micro-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed6.count() << " nano-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed7.count() << " nano-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed8.count() << " nano-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed9.count() << " nano-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed10.count() << " nano-seconds" << std::endl;
+
 
     return 0;
 }
