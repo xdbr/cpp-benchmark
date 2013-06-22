@@ -37,6 +37,7 @@ int main() {
     auto time_elapsed8 = util::time_this<std::nano, void>([] () -> void { std::cout << "Hello World!" << std::endl;});
     auto time_elapsed9 = util::time_this<std::nano, int>([]() -> int{ return bar_function(42); } );
     auto time_elapsed10 = util::time_this(std::function<int()>(std::bind(bar_function, 31337)));
+    auto time_elapsed11 = util::time_this(<:]{%>);
     
     std::cout << "Time elapsed: " <<  std::chrono::duration_cast<std::chrono::seconds>(time_elapsed0).count() << " seconds" << std::endl;
     std::cout << "Time elapsed: " <<  time_elapsed0.count() << " milli-seconds" << std::endl;
@@ -50,6 +51,7 @@ int main() {
     std::cout << "Time elapsed: " <<  time_elapsed8.count() << " nano-seconds" << std::endl;
     std::cout << "Time elapsed: " <<  time_elapsed9.count() << " nano-seconds" << std::endl;
     std::cout << "Time elapsed: " <<  time_elapsed10.count() << " nano-seconds" << std::endl;
+    std::cout << "Time elapsed: " <<  time_elapsed11.count() << " nano-seconds" << std::endl;
 
 
     return 0;
