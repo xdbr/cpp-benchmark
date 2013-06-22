@@ -11,8 +11,10 @@ CLEAN.include(OBJECTS, EXE)
 task :default => :test
 
 desc "Run all tests (default)"
-multitask :test => EXE do
-  sh "./#{EXE}"
+task :test => EXE do
+  EXE.each do |e|
+    sh "./#{e}"
+  end
 end
 
 rule '.o' => ['.cpp'] do |t|
